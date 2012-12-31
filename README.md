@@ -3,6 +3,8 @@ OpenDataStack
 
 Modular open data store, API, and Unix/Linux conventions
 
+## Install
+
 Install python, virtualenv, csvkit, postgres, and mongodb:
 
     $ sudo apt-get install postgresql python-pip python-dev build-essential mongodb-10gen
