@@ -58,7 +58,7 @@ Result:
 
 * [sample_interface.html] () A hello world app.  Gets metadata and a data table.
 
-* pico-ckan. A lightweight CKAN clone.
+* [pico-ckan] (http://github.com/alexbyrnes/pico-ckan). A lightweight CKAN clone.
 
 * D3, highcharts, jQuery...  Anything that reads JSON.
 
