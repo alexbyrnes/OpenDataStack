@@ -49,7 +49,7 @@ Start API server:
     
 *There is also a [tornado app] (https://github.com/alexbyrnes/OpenDataStack/blob/master/tornadoapp.py) if you want to run [tornado] (http://www.tornadoweb.org/).*
 
-Get data:
+Test:
 
     $ curl http://localhost:5000/api/action/datastore_search_sql?q=select%20*%20from%20firehouses
 
