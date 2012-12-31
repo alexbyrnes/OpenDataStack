@@ -7,7 +7,7 @@ Install python, virtualenv, csvkit, postgres, and mongodb:
 
     $ sudo apt-get install postgresql python-pip python-dev build-essential mongodb-10gen
     # virtualenv recommended
-    $ pip install csvkit
+    $ pip install -r requirements.txt
     
 Get Socrata data:
 
