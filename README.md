@@ -56,7 +56,7 @@ Result:
 
 # The payoff!  
 
-* [sample_interface.html] () A hello world app.  Gets metadata and a data table.
+* [sample_interface.html] (https://github.com/alexbyrnes/OpenDataStack/blob/master/sample_interface.html) A hello world app.  Gets metadata and a data table.
 
 * [pico-ckan] (http://github.com/alexbyrnes/pico-ckan). A lightweight CKAN clone.
 
