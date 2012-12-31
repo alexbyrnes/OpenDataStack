@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+
+<script>
+
+
+$.getJSON('http://localhost:5000/api/action/package_show?id=28km-gtjn', function(data) {
+
+  // Socrata style metadata
+  var items = [];
+  items.push('<b>This data is from: ' + data['attribution'] + '</b>');
+  items.push('<br/>');
+  items.push('<b>The subject of the data is: ' + data['description'] + '</b>');
+ 
+  $('<table>', {
+    html: items.join('')
+  }).appendTo('body');
+ 
+});
+
+
+$.getJSON('http://localhost:5000/api/action/datastore_search_sql?q=select%20*%20from%20firehouses', function(data) {
+
+  var items = [];
+
+  // Loop over items in the json array (Each is an associative array with column names as keys)
+  // [ {'column name': 'value1', ...}, {'column_name': 'value2', ...} ]
+  
+  $.each(data, function(key, val) {
+    
+	items.push('<tr>');
+	
+    $.each(val, function(k, v) {
+       items.push('<td>' + v + '</td>');
+	 });
+
+	 items.push('</tr>');
+
+  });
+
+  $('<table>', {
+    html: items.join('')
+  }).appendTo('body');
+});
+
+</script>
+
+</body>
+</html>
+
+
