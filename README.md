@@ -6,7 +6,9 @@ Modular open data store, API, and Unix/Linux conventions
 Install python, virtualenv, csvkit, postgres, and mongodb:
 
     $ sudo apt-get install postgresql python-pip python-dev build-essential mongodb-10gen
-
+    # virtualenv recommended
+    $ pip install csvkit
+    
 Get Socrata data:
 
     $ curl https://data.cityofchicago.org/api/views/28km-gtjn/rows.csv?accessType=DOWNLOAD | csvsql --no-constraints --insert --table firehouses --db "postgresql://odsuser:odspass@localhost/opendatastore"
