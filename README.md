@@ -44,6 +44,8 @@ It's a good idea to revoke privileges other than SELECT for the user in the conn
 Start API server:
 
     $ python open_data_api.py
+    
+*There is also a [tornado app] (https://github.com/alexbyrnes/OpenDataStack/blob/master/tornadoapp.py) if you want to run [tornado] (http://www.tornadoweb.org/).*
 
 Get data:
 
