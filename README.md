@@ -56,7 +56,7 @@ Start API server:
 
     $ python open_data_api.py
     
-*There is also a [tornado app] (https://github.com/alexbyrnes/OpenDataStack/blob/master/tornadoapp.py) if you want to run [tornado] (http://www.tornadoweb.org/).*
+*(There is also a [tornado app] (https://github.com/alexbyrnes/OpenDataStack/blob/master/tornadoapp.py) if you want to run [tornado] (http://www.tornadoweb.org/).)*
 
 Test:
 
@@ -70,7 +70,7 @@ Result:
 
 ## The payoff!
 
-Easy interface development.  
+Easy interface development 
 
 Examples:
 
