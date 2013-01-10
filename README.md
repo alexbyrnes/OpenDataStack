@@ -68,10 +68,12 @@ Result:
 
 
 
-## The payoff
+## The payoff!
+
+Easy interface development.  
+
+Examples:
 
 * [sample_interface.html] (https://github.com/alexbyrnes/OpenDataStack/blob/master/sample_interface.html). A hello world app.  Gets metadata and a data table.
 
 * [pico-ckan] (http://github.com/alexbyrnes/pico-ckan). A lightweight CKAN clone.
-
-
