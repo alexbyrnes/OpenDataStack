@@ -23,6 +23,19 @@ CKAN metadata:
 
     $ curl http://opendata.cmap.illinois.gov/api/action/package_show?id=4cb2a4e2-8aaa-484d-8a9f-0874e70697fe | python filter_open_json.py | mongoimport -d metadb -c metadata
 
+Get all datasets at once (CKAN API 3):
+
+    $ curl 'http://opendata.cmap.illinois.gov/api/action/current_package_list_with_resources?' -d{} | python filter_open_json.py | mongoimport -d metadb -c metadata --jsonArray
+
+Get all datasets at once (CKAN API 1 & 2):
+
+    $ curl 'http://data.gov.uk/api/2/rest/package' | python read_hub.py > datagovukdatasets_stripped.txt
+    $ ./gethub.sh -a=http://data.gov.uk/api/2/rest/package/ datagovukdatasets_stripped.txt | mongoimport -d metadb -c metadata --jsonArray
+
+Another example:
+
+    $ curl 'http://hub.healthdata.gov/api/2/rest/dataset' | python read_hub.py > healthdatagov_stripped.txt
+    $ ./gethub.sh -a=http://hub.healthdata.gov/api/2/rest/dataset/ healthdatagov_stripped.txt | mongoimport -d metadb -c metadata --jsonArray
 
 
 # getdata.sh
