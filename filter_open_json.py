@@ -12,7 +12,10 @@ datadict = json.loads(data)
 if (len(sys.argv) > 1 and sys.argv[1] == "--socrata"): 
     metadata = datadict['meta']['view']
 else:
-    metadata = datadict['result']    
+    try:
+      metadata = datadict['result']
+    except KeyError, TypeError:
+      metadata = datadict 
 
 
 print(json.dumps(metadata))
