@@ -3,22 +3,25 @@ OpenDataStack
 
 Modular open data store, API, and Unix/Linux conventions
 
+## Install
+
 Install python, virtualenv, csvkit, postgres, and mongodb:
 
-    sudo apt-get install 
-
-
+    $ sudo apt-get install postgresql python-pip python-dev build-essential mongodb-10gen
+    # virtualenv recommended
+    $ pip install -r requirements.txt
+    
 Get Socrata data:
 
-    curl https://data.cityofchicago.org/api/views/28km-gtjn/rows.csv?accessType=DOWNLOAD | csvsql --no-constraints --insert --table firehouses --db "postgresql://odsuser:odspass@localhost/opendatastore"
+    $ curl https://data.cityofchicago.org/api/views/28km-gtjn/rows.csv?accessType=DOWNLOAD | csvsql --no-constraints --insert --table firehouses --db "postgresql://odsuser:odspass@localhost/opendatastore"
 
 Get Socrata metadata:
 
-    curl https://data.cityofchicago.org/api/views/28km-gtjn/rows.json?accessType=DOWNLOAD | python filter_open_json.py --socrata | mongoimport -d metadb -c metadata
+    $ curl https://data.cityofchicago.org/api/views/28km-gtjn/rows.json?accessType=DOWNLOAD | python filter_open_json.py --socrata | mongoimport -d metadb -c metadata
 
 CKAN metadata:
 
-    curl http://opendata.cmap.illinois.gov/api/action/package_show?id=4cb2a4e2-8aaa-484d-8a9f-0874e70697fe | python filter_open_json.py | mongoimport -d metadb -c metadata
+    $ curl http://opendata.cmap.illinois.gov/api/action/package_show?id=4cb2a4e2-8aaa-484d-8a9f-0874e70697fe | python filter_open_json.py | mongoimport -d metadb -c metadata
 
 
 
@@ -28,25 +31,27 @@ The getdata.sh script consolidates the options above, checks that the right prog
 
 Get CKAN metadata:
 
-    ./getdata.sh -mdb=metadb -c=metadata http://opendata.cmap.illinois.gov/api/action/package_show?id=4cb2a4e2-8aaa-484d-8a9f-0874e70697fe
+    $ ./getdata.sh -mdb=metadb -c=metadata http://opendata.cmap.illinois.gov/api/action/package_show?id=4cb2a4e2-8aaa-484d-8a9f-0874e70697fe
 
 Get Socrata data and metadata (notice shortened URL so it works for both):
 
-    ./getdata.sh -s -t=firehouses -mdb=metadb -c=metadata -db=postgresql://odsuser:odspass@localhost/opendatastore https://data.cityofchicago.org/api/views/28km-gtjn
+    $ ./getdata.sh -s -t=firehouses -mdb=metadb -c=metadata -db=postgresql://odsuser:odspass@localhost/opendatastore https://data.cityofchicago.org/api/views/28km-gtjn
 
 
 It's a good idea to revoke privileges other than SELECT for the user in the connection string when serving through a public API (example for Postgres):
 
-    REVOKE ALL PRIVILEGES ON firehouses FROM odsuser;
-    GRANT SELECT ON firehouses TO odsuser;
+    postgres=# REVOKE ALL PRIVILEGES ON firehouses FROM odsuser;
+    postgres=# GRANT SELECT ON firehouses TO odsuser;
 
 Start API server:
 
-    python open_data_api.py
+    $ python open_data_api.py
+    
+*There is also a [tornado app] (https://github.com/alexbyrnes/OpenDataStack/blob/master/tornadoapp.py) if you want to run [tornado] (http://www.tornadoweb.org/).*
 
-Get data:
+Test:
 
-    curl http://localhost:5000/api/action/datastore_search_sql?q=select%20*%20from%20firehouses
+    $ curl http://localhost:5000/api/action/datastore_search_sql?q=select%20*%20from%20firehouses
 
 Result:
 
@@ -56,10 +61,8 @@ Result:
 
 # The payoff!  
 
-* [sample_interface.html] () A hello world app.  Gets metadata and a data table.
+* [sample_interface.html] (https://github.com/alexbyrnes/OpenDataStack/blob/master/sample_interface.html) A hello world app.  Gets metadata and a data table.
 
-* pico-ckan. A lightweight CKAN clone.
-
-* D3, highcharts, jQuery...  Anything that reads JSON.
+* [pico-ckan] (http://github.com/alexbyrnes/pico-ckan). A lightweight CKAN clone.
 
 
