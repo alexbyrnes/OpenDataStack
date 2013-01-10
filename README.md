@@ -32,15 +32,10 @@ Get all datasets at once (CKAN API 1 & 2):
     $ curl 'http://data.gov.uk/api/2/rest/package' | python read_hub.py > datagovukdatasets_stripped.txt
     $ ./gethub.sh -a=http://data.gov.uk/api/2/rest/package/ datagovukdatasets_stripped.txt | mongoimport -d metadb -c metadata --jsonArray
 
-Another example:
 
-    $ curl 'http://hub.healthdata.gov/api/2/rest/dataset' | python read_hub.py > healthdatagov_stripped.txt
-    $ ./gethub.sh -a=http://hub.healthdata.gov/api/2/rest/dataset/ healthdatagov_stripped.txt | mongoimport -d metadb -c metadata --jsonArray
+## getdata.sh
 
-
-# getdata.sh
-
-The getdata.sh script consolidates the options above, checks that the right programs are installed, has help.  If you need to pass more options to csvsql or mongoimport, it's better to use the individual commands.
+The getdata.sh script consolidates the options above, checks that the right programs are installed; has help.  If you need to pass more options to csvsql or mongoimport, it's better to use the individual commands.
 
 Get CKAN metadata:
 
@@ -50,6 +45,7 @@ Get Socrata data and metadata (notice shortened URL so it works for both):
 
     $ ./getdata.sh -s -t=firehouses -mdb=metadb -c=metadata -db=postgresql://odsuser:odspass@localhost/opendatastore https://data.cityofchicago.org/api/views/28km-gtjn
 
+## Starting up a public API
 
 It's a good idea to revoke privileges other than SELECT for the user in the connection string when serving through a public API (example for Postgres):
 
@@ -72,9 +68,9 @@ Result:
 
 
 
-# The payoff!  
+## The payoff
 
-* [sample_interface.html] (https://github.com/alexbyrnes/OpenDataStack/blob/master/sample_interface.html) A hello world app.  Gets metadata and a data table.
+* [sample_interface.html] (https://github.com/alexbyrnes/OpenDataStack/blob/master/sample_interface.html). A hello world app.  Gets metadata and a data table.
 
 * [pico-ckan] (http://github.com/alexbyrnes/pico-ckan). A lightweight CKAN clone.
 
