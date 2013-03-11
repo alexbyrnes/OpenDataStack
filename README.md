@@ -1,6 +1,7 @@
 OpenDataStack
 =============
 [![Build Status](https://travis-ci.org/alexbyrnes/OpenDataStack.png)](https://travis-ci.org/alexbyrnes/OpenDataStack)
+
 Modular open data store, API, and Unix/Linux conventions
 
 ## Install
