@@ -37,12 +37,12 @@ class TestDatastoreCreate(unittest.TestCase):
         resource = testPackage().resources[0]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+#        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
 
         resource = testPackage().resources[1]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+#        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
 
     '''
     def test_create_requires_auth(self):

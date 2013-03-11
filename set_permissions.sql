@@ -21,6 +21,9 @@ To run the script, execute:
 -- username of the datastore user who has only read permissions
 \set rouser "readonlyuser"
 
+
+
+
 REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 
@@ -38,6 +41,7 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO :rouser;
 ---- the permissions will be set when the write user creates a table
 ALTER DEFAULT PRIVILEGES FOR USER :wuser IN SCHEMA public
    GRANT SELECT ON TABLES TO :rouser;
+
 
 CREATE OR REPLACE VIEW "_table_metadata" AS 
  SELECT DISTINCT
@@ -59,4 +63,5 @@ CREATE OR REPLACE VIEW "_table_metadata" AS
     ORDER BY dependee.oid DESC;
   
 
+ALTER TABLE _table_metadata OWNER TO writeuser;
 
