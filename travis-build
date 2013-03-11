@@ -18,7 +18,7 @@ sudo sed -i -e 's/ident/trust/g' /etc/postgresql/$PGVERSION/main/pg_hba.conf
 
 sudo service postgresql reload
 
-pip install -r requirements.txt --use-mirrors
+pip install -r requirements-test.txt --use-mirrors
 
 psql -c 'CREATE DATABASE datastore;' -U postgres
 psql -c 'CREATE USER writeuser;' -U postgres
