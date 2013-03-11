@@ -41,3 +41,7 @@ Result:
 
     [{"ENGINE": "E119", "CITY": "CHICAGO", "NAME": "E119", "ZIP": 60631, "STATE": "IL", "LOCATION": "6030 N AVONDALE AVE\nCHICAGO, IL 60631\n(41.99120656361649, -87.79879483457952)", "ADDRESS": "6030 N AVONDALE AVE"}, {"ENGINE": "E121", "CITY": "CHICAGO", "NAME": "E121", "ZIP": 60643, "STATE": "IL", "LOCATION": "1724 W 95TH ST\nCHICAGO, IL 60643\n(41.72124683806391, -87.66576328672551)", "ADDRESS": "1724 W 95TH ST"}, {"ENGINE": "E80", "CITY": "CHICAGO", "NAME": "E80", "ZIP": 60633, "STATE": "IL", "LOCATION": "12701 S DOTY AVE\nCHICAGO, IL 60633\n(41.66260010624714, -87.59059746685327)",
 
+
+Example:
+
+* [sample_interface.html] (https://github.com/alexbyrnes/OpenDataStack/blob/master/examples/sample_interface.html). A hello world app.  Gets metadata and a data table.
