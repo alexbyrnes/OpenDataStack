@@ -39,8 +39,6 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO :rouser;
 ALTER DEFAULT PRIVILEGES FOR USER :wuser IN SCHEMA public
    GRANT SELECT ON TABLES TO :rouser;
 
-\c datastore;
-
 CREATE OR REPLACE VIEW "_table_metadata" AS 
  SELECT DISTINCT
     substr(md5(dependee.relname || COALESCE(dependent.relname, '')), 0, 17) AS "_id",
