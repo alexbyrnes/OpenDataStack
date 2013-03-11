@@ -13,31 +13,19 @@ To run the script, execute:
     sudo -u postgres psql postgres -f set_permissions.sql
 */
 
+
 -- the name of the datastore database
 \set datastoredb "datastore"
--- username of the ckan postgres user
-\set ckanuser "ckanuser"
 -- username of the datastore user that can write
 \set wuser "writeuser"
 -- username of the datastore user who has only read permissions
 \set rouser "readonlyuser"
 
--- revoke permissions for the read-only user
----- this step can be ommitted if the datastore not
----- on the same server as the CKAN database
 REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 
-GRANT CREATE ON SCHEMA public TO :ckanuser;
-GRANT USAGE ON SCHEMA public TO :ckanuser;
-
 GRANT CREATE ON SCHEMA public TO :wuser;
 GRANT USAGE ON SCHEMA public TO :wuser;
-
--- take connect permissions from main CKAN db
----- again, this can be ommited if the read-only user can never have
----- access to the main CKAN database
-REVOKE CONNECT ON DATABASE :maindb FROM :rouser;
 
 -- grant select permissions for read-only user
 GRANT CONNECT ON DATABASE :datastoredb TO :rouser;
@@ -50,3 +38,26 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO :rouser;
 ---- the permissions will be set when the write user creates a table
 ALTER DEFAULT PRIVILEGES FOR USER :wuser IN SCHEMA public
    GRANT SELECT ON TABLES TO :rouser;
+
+
+CREATE OR REPLACE VIEW "_table_metadata" AS 
+ SELECT DISTINCT
+    substr(md5(dependee.relname || COALESCE(dependent.relname, '')), 0, 17) AS "_id",
+    dependee.relname AS name,
+    dependee.oid AS oid,
+    dependent.relname AS alias_of
+    -- dependent.oid AS oid
+ FROM
+    pg_class AS dependee
+    LEFT OUTER JOIN pg_rewrite AS r ON r.ev_class = dependee.oid
+    LEFT OUTER JOIN pg_depend AS d ON d.objid = r.oid
+    LEFT OUTER JOIN pg_class AS dependent ON d.refobjid = dependent.oid
+ WHERE
+    (dependee.oid != dependent.oid OR dependent.oid IS NULL) AND
+    (dependee.relname IN (SELECT tablename FROM pg_catalog.pg_tables)
+    OR dependee.relname IN (SELECT viewname FROM pg_catalog.pg_views)) AND
+    dependee.relnamespace = (SELECT oid FROM pg_namespace WHERE nspname='public')
+    ORDER BY dependee.oid DESC;
+  
+
+
