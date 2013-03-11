@@ -1,0 +1,29 @@
+#!/bin/sh
+
+TRAVIS_PGVERSION='9.1'
+#if [ $PGVERSION != $TRAVIS_PGVERSION ]
+#then
+#  sudo -u postgres pg_dropcluster --stop $TRAVIS_PGVERSION main
+  # Make psql use $PGVERSION
+#  export PGCLUSTER=$PGVERSION/main
+#fi
+
+# Install postgres and solr
+# We need this ppa so we can install postgres-8.4
+#sudo add-apt-repository -yy ppa:pitti/postgresql
+#sudo apt-get update -qq
+
+# Don't require a password to access DB
+sudo sed -i -e 's/ident/trust/g' /etc/postgresql/$PGVERSION/main/pg_hba.conf 
+
+sudo service postgresql reload
+
+pip install -r requirements.txt --use-mirrors
+
+psql -c 'CREATE DATABASE datastore;' -U postgres
+
+#python setup.py develop
+#sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/postgres@\/datastore/' development.ini
+
+nosetests -v --nologcapture datastore/tests/
+
