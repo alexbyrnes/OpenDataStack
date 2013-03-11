@@ -11,7 +11,7 @@ import datastore.db as db
 
 headers = {'content-type': 'application/json'}
 
-DB_CONNECTION = 'postgresql://ckanuser:pass@localhost/datastore'
+DB_CONNECTION = 'postgresql://writeuser:pass@localhost/datastore'
 
 
 class resource:

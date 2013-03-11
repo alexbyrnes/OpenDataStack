@@ -14,7 +14,7 @@ from datastore.tests.helpers import extract
 import pprint
 
 
-DB_CONNECTION = 'postgresql://ckanuser:pass@localhost/datastore'
+DB_CONNECTION = 'postgresql://writeuser:pass@localhost/datastore'
 headers = {'content-type': 'application/json'}
 
 

@@ -7,7 +7,7 @@ import sqlalchemy
 import sqlalchemy.orm as orm
 import datastore.db as db
 
-DB_CONNECTION = 'postgresql://ckanuser:pass@localhost/datastore'
+DB_CONNECTION = 'postgresql://writeuser:pass@localhost/datastore'
 
 import sys
 
@@ -37,12 +37,12 @@ class TestDatastoreCreate(unittest.TestCase):
         resource = testPackage().resources[0]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-#        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
 
         resource = testPackage().resources[1]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-#        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
 
     '''
     def test_create_requires_auth(self):

@@ -7,7 +7,7 @@ import sqlalchemy
 import sqlalchemy.orm as orm
 import datastore.db as db
 
-DB_CONNECTION = 'postgresql://ckanuser:pass@localhost/datastore'
+DB_CONNECTION = 'postgresql://writeuser:pass@localhost/datastore'
 
 import sys
 
