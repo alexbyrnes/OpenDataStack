@@ -5,7 +5,7 @@ python:
 env:
   - PGVERSION=9.1
   - PGVERSION=8.4
-script: ./bin/travis-build
+script: ./travis-build
 notifications:
   irc:
     channels:
