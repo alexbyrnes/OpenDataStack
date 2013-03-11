@@ -2,3 +2,6 @@ Flask
 psycopg2
 pymongo
 csvkit
+PasteDeploy
+requests
+nose==1.2.1
