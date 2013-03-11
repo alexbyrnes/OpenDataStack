@@ -33,5 +33,5 @@ sudo -u postgres psql postgres -f set_permissions.sql -d datastore
 #python setup.py develop
 #sed -i -e 's/.*datastore.write_url.*/ckan.datastore.write_url = postgresql:\/\/postgres@\/datastore/' development.ini
 
-#nosetests -v --nologcapture datastore/tests/
+nosetests -v --nologcapture datastore/tests/
 
