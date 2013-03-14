@@ -1,5 +1,0 @@
-Flask
-psycopg2
-PasteDeploy
-requests
-nose==1.2.1
