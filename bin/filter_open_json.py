@@ -9,15 +9,13 @@ for line in sys.stdin:
 
 datadict = json.loads(data)
 
-if (len(sys.argv) > 1 and sys.argv[1] == "--socrata"): 
+if (len(sys.argv) > 1 and sys.argv[1] == "--socrata"):
     metadata = datadict['meta']['view']
 else:
     try:
-      metadata = datadict['result']
+        metadata = datadict['result']
     except KeyError, TypeError:
-      metadata = datadict 
+        metadata = datadict
 
 
 print(json.dumps(metadata))
-
-

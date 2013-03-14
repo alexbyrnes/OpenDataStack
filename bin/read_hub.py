@@ -11,5 +11,3 @@ datadict = json.loads(data)
 
 for d in datadict:
     print(d)
-
-

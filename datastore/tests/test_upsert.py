@@ -18,11 +18,11 @@ class resource:
     def __init__(self, id):
         self.id = id
 
+
 class testPackage:
-    id  = 'f7a97c92-9156-46a1-9110-ae8c7b509bbc'
+    id = 'f7a97c92-9156-46a1-9110-ae8c7b509bbc'
     name = 'annakarenina'
     resources = [resource('1234'), resource('5678')]
-
 
 
 class TestDatastoreUpsert(unittest.TestCase):
@@ -41,28 +41,30 @@ class TestDatastoreUpsert(unittest.TestCase):
             'records': [{u'b\xfck': 'annakarenina', 'author': 'tolstoy',
                         'published': '2005-03-01', 'nested': ['b', {'moo': 'moo'}]},
                         {u'b\xfck': 'warandpeace', 'author': 'tolstoy',
-                        'nested': {'a':'b'}}
-                       ]
-            }
+                        'nested': {'a': 'b'}}
+                        ]
+        }
         postparams = json.dumps(self.data)
 
-        res = self.app.post('/api/action/datastore_create', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_create', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
         assert res_dict['success'] == 'true'
-
 
     def tearDown(self):
         resource = testPackage().resources[0]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+        self.app.post(
+            '/api/action/datastore_delete', data=postparams, headers=headers)
 
         resource = testPackage().resources[1]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+        self.app.post(
+            '/api/action/datastore_delete', data=postparams, headers=headers)
 
-    '''	
+    '''
     def test_upsert_requires_auth(self):
         data = {
             'resource_id': self.data['resource_id']
@@ -72,20 +74,22 @@ class TestDatastoreUpsert(unittest.TestCase):
         res_dict = json.loads(res.data)
         assert res_dict['success'] == 'false'
     '''
-	
+
     def test_upsert_empty_fails(self):
         postparams = json.dumps({})
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
         assert res_dict['success'] == 'false'
 
     def test_upsert_basic(self):
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select 1 from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select 1 from "{0}"'.format(
+            self.data['resource_id']))
         assert results.rowcount == 2
         c.close()
-		
+
         hhguide = u"hitchhiker's guide to the galaxy"
 
         data = {
@@ -101,13 +105,15 @@ class TestDatastoreUpsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select * from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select * from "{0}"'.format(
+            self.data['resource_id']))
         assert results.rowcount == 3
 
         records = results.fetchall()
@@ -118,7 +124,8 @@ class TestDatastoreUpsert(unittest.TestCase):
         c.close()
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute("select * from \"{0}\" where author='{1}'".format(self.data['resource_id'], 'adams'))
+        results = c.execute("select * from \"{0}\" where author='{1}'".format(
+            self.data['resource_id'], 'adams'))
         assert results.rowcount == 1
         c.close()
 
@@ -131,13 +138,15 @@ class TestDatastoreUpsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select * from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select * from "{0}"'.format(
+            self.data['resource_id']))
         assert results.rowcount == 3
 
         records = results.fetchall()
@@ -155,19 +164,21 @@ class TestDatastoreUpsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select * from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select * from "{0}"'.format(
+            self.data['resource_id']))
         assert results.rowcount == 3
 
         records = results.fetchall()
         assert records[2][u'b\xfck'] == hhguide
         assert records[2].author == 'adams'
-        assert records[2].published == None
+        assert records[2].published is None
         c.close()
 
         data = {
@@ -178,13 +189,15 @@ class TestDatastoreUpsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select * from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select * from "{0}"'.format(
+            self.data['resource_id']))
         assert results.rowcount == 4
 
         records = results.fetchall()
@@ -201,7 +214,8 @@ class TestDatastoreUpsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
@@ -215,7 +229,8 @@ class TestDatastoreUpsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'false'
@@ -229,7 +244,8 @@ class TestDatastoreUpsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'false'
@@ -251,12 +267,13 @@ class TestDatastoreInsert(unittest.TestCase):
             'records': [{u'b\xfck': 'annakarenina', 'author': 'tolstoy',
                         'published': '2005-03-01', 'nested': ['b', {'moo': 'moo'}]},
                         {u'b\xfck': 'warandpeace', 'author': 'tolstoy',
-                        'nested': {'a':'b'}}
-                       ]
-            }
+                        'nested': {'a': 'b'}}
+                        ]
+        }
         postparams = json.dumps(self.data)
 
-        res = self.app.post('/api/action/datastore_create', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_create', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
         assert res_dict['success'] == 'true'
 
@@ -264,14 +281,15 @@ class TestDatastoreInsert(unittest.TestCase):
         resource = testPackage().resources[0]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+        self.app.post(
+            '/api/action/datastore_delete', data=postparams, headers=headers)
 
         resource = testPackage().resources[1]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+        self.app.post(
+            '/api/action/datastore_delete', data=postparams, headers=headers)
 
-		
     def test_insert_non_existing_field(self):
         data = {
             'resource_id': self.data['resource_id'],
@@ -281,7 +299,8 @@ class TestDatastoreInsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'false'
@@ -295,7 +314,8 @@ class TestDatastoreInsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'false'
@@ -314,13 +334,15 @@ class TestDatastoreInsert(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select * from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select * from "{0}"'.format(
+            self.data['resource_id']))
         c.close()
 
         assert results.rowcount == 3
@@ -343,16 +365,17 @@ class TestDatastoreUpdate(unittest.TestCase):
             'records': [{u'b\xfck': 'annakarenina', 'author': 'tolstoy',
                         'published': '2005-03-01', 'nested': ['b', {'moo': 'moo'}]},
                         {u'b\xfck': 'warandpeace', 'author': 'tolstoy',
-                        'nested': {'a':'b'}},
+                        'nested': {'a': 'b'}},
                         {'author': 'adams',
                         'characters': ['Arthur Dent', 'Marvin'],
                         'nested': {'foo': 'bar'},
                         u'b\xfck': hhguide}
-                       ]
-            }
+                        ]
+        }
         postparams = json.dumps(self.data)
 
-        res = self.app.post('/api/action/datastore_create', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_create', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
         assert res_dict['success'] == 'true'
 
@@ -360,17 +383,19 @@ class TestDatastoreUpdate(unittest.TestCase):
         resource = testPackage().resources[0]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
+        self.app.post(
+            '/api/action/datastore_delete', data=postparams, headers=headers)
 
         resource = testPackage().resources[1]
         data = {'resource_id': resource.id}
         postparams = json.dumps(data)
-        self.app.post('/api/action/datastore_delete', data=postparams, headers=headers)
-	
+        self.app.post(
+            '/api/action/datastore_delete', data=postparams, headers=headers)
 
     def test_update_basic(self):
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select 1 from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select 1 from "{0}"'.format(
+            self.data['resource_id']))
         assert results.rowcount == 3, results.rowcount
         c.close()
 
@@ -387,13 +412,15 @@ class TestDatastoreUpdate(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select * from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select * from "{0}"'.format(
+            self.data['resource_id']))
         assert results.rowcount == 3
 
         records = results.fetchall()
@@ -402,7 +429,8 @@ class TestDatastoreUpdate(unittest.TestCase):
         c.close()
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute("select * from \"{0}\" where author='{1}'".format(self.data['resource_id'], 'adams'))
+        results = c.execute("select * from \"{0}\" where author='{1}'".format(
+            self.data['resource_id'], 'adams'))
         assert results.rowcount == 1
         c.close()
 
@@ -415,13 +443,15 @@ class TestDatastoreUpdate(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select * from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select * from "{0}"'.format(
+            self.data['resource_id']))
         c.close()
         assert results.rowcount == 3
 
@@ -439,20 +469,22 @@ class TestDatastoreUpdate(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'true'
 
         c = sqlalchemy.create_engine(DB_CONNECTION).connect()
-        results = c.execute('select * from "{0}"'.format(self.data['resource_id']))
+        results = c.execute('select * from "{0}"'.format(
+            self.data['resource_id']))
         c.close()
         assert results.rowcount == 3
 
         records = results.fetchall()
         assert records[2][u'b\xfck'] == hhguide
         assert records[2].author == 'adams'
-        assert records[2].published == None
+        assert records[2].published is None
 
     def test_update_missing_key(self):
         data = {
@@ -463,7 +495,8 @@ class TestDatastoreUpdate(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'false'
@@ -477,7 +510,8 @@ class TestDatastoreUpdate(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'false'
@@ -491,8 +525,8 @@ class TestDatastoreUpdate(unittest.TestCase):
 
         postparams = json.dumps(data)
 
-        res = self.app.post('/api/action/datastore_upsert', data=postparams, headers=headers)
+        res = self.app.post(
+            '/api/action/datastore_upsert', data=postparams, headers=headers)
         res_dict = json.loads(res.data)
 
         assert res_dict['success'] == 'false'
-
