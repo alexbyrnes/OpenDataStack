@@ -21,7 +21,7 @@ Features
 Roadmap
 --------
 
-- MySQL and other SQLAlchemy databases
+- MySQL, SQLAlchemy databases
 - OAuth
 
 
