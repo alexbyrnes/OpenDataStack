@@ -57,7 +57,7 @@ Run the tests:
 Getting Started
 --------
 
-Get some data (City of Chicago firehouses):
+Get some data ([City of Chicago firehouses](https://data.cityofchicago.org/Public-Safety/Fire-Stations/28km-gtjn)):
 
     $ curl https://data.cityofchicago.org/api/views/28km-gtjn/rows.csv?accessType=DOWNLOAD | csvsql --no-constraints --insert --table firehouses --db "postgresql://writeuser:pass@localhost/datastore"
 
