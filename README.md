@@ -2,7 +2,7 @@ OpenDataStack
 =============
 [![Build Status](https://travis-ci.org/alexbyrnes/OpenDataStack.png)](https://travis-ci.org/alexbyrnes/OpenDataStack)
 
-Deployable data store designed for open data applications.
+Deployable data store for open data applications.
 
 
 Features
@@ -12,11 +12,11 @@ Features
 - PEP8 compliance
 - 46 unit test suite
 - Easy deployment to OpenShift and Heroku
-- Compatible: 
+- High compatibility: 
     * SQLAlchemy
     * Tornado or Flask server
     * Data storage and API for CKAN/DKAN/Pico-CKAN
-    * Recline.js, D3, Highcharts etc
+    * Recline.js, D3, Highcharts, and other JSON clients
 
 Roadmap
 --------
